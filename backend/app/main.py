@@ -7,6 +7,7 @@ from starlette.requests import Request
 
 from app.api import router
 from app.config import get_settings
+from app.evaluation_api import router as evaluation_router
 from app.logging_config import configure_logging
 
 
@@ -55,6 +56,7 @@ def create_app() -> FastAPI:
         return {"service": "talent-document-api", "status": "ok"}
 
     app.include_router(router)
+    app.include_router(evaluation_router)
     return app
 
 

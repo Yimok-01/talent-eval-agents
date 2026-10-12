@@ -250,9 +250,10 @@ def search_with_optimization(
 QUERY_PLAN_SYSTEM_PROMPT = """你是人才查询计划编译器。只把用户明确表达的条件转换为 QueryPlan。
 硬条件只允许使用下面的 Filter DSL，禁止生成 SQL：
 {filter_dsl}
-经历、技能、项目成果等材料内容写入 semantic_requirements。
-“优先”等软偏好写入 preferences，不能改写为硬条件。
-含糊表达写入 clarifications，禁止自行补充阈值。权限、租户和密级不从用户文本提取。"""
+经历、技能、项目成果、经验等材料内容一律写入 semantic_requirements 作为检索要求，即使表述简略、未说明角色、时间或体现形式，也不得写入 clarifications。
+“优先”“资深”“经验丰富”等软性描述写入 preferences 或 semantic_requirements，不能改写为硬条件，也不得据此生成 clarifications。
+只有满足以下任一情况才写入 clarifications：(1) 结构化硬条件缺少可执行阈值，例如“年龄大点”无法换算为 age 阈值；(2) 条件之间互相矛盾。除此之外一律不得写入 clarifications。
+权限、租户和密级不从用户文本提取。"""
 
 
 def compile_query_plan(query: str, model: Any) -> QueryPlan:

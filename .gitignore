@@ -16,3 +16,6 @@ dist/
 *.zip
 logs/
 backend/.langgraph_api/
+.idea/
+*.out.log
+*.err.log

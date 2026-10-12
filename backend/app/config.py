@@ -1,5 +1,6 @@
 from functools import lru_cache
 
+from pydantic import Field
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
@@ -26,6 +27,11 @@ class Settings(BaseSettings):
     milvus_collection: str = "talent_evidence_v2"
     log_dir: str = "logs"
     service_name: str = "backend"
+    agent_server_url: str = "http://127.0.0.1:2024"
+    agent_server_api_key: str = ""
+    evaluation_tenant_id: str = "course-demo"
+    evaluation_permission_scopes: str = "hr_private"
+    evaluation_max_concurrency: int = Field(default=6, ge=1, le=24)
 
 
 @lru_cache
